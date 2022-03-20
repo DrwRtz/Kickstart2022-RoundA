@@ -34,7 +34,7 @@ int main()
         std::cin >> input;
 
         int target = findNumber(input);
-
+ 
         std::cout << "Case #" << i << ": ";
 
         if (target == 0)
