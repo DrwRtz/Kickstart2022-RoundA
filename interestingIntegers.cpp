@@ -1,5 +1,21 @@
 #include <iostream>
 #include <string>
+
+void isItInteresting(std::string a, int &ans) 
+{
+    long long sum = 0, product = 1;
+
+    for (int j = 0; j < a.length(); j++)
+    {
+        sum += (a[j] - '0');
+        product *= (a[j] - '0');
+    }
+            
+    if (product % sum == 0)
+    {
+        ans++;
+    }
+}
  
 int main()
 {
@@ -11,29 +27,42 @@ int main()
         std::string a, b;
         std::cin >> a >> b;
 
-        int diff = (std::stoi(b) - std::stoi(a)) + 1; 
-
         int ans = 0;
-        for (int j = 0; j < diff; j++)
+        while (a != b) 
         {
-            std::string temp = a;
-            
-            int sum = 0, product = 1;
+            isItInteresting(a, ans);
 
-            for (int k = 0; k < temp.length(); k++)
+            if (a[a.length() - 1] == '9')
             {
-                sum += (temp[k] - '0');
-                product *= (temp[k] - '0');
-            } 
-            
-            if (product % sum == 0)
-            {
-                ans++;
+                int curr = a.length() - 1;
+
+                while (a[curr] == '9')
+                {
+                    a[curr] = '0';
+
+                    if (curr == 0)
+                    {
+                        a = '1' + a;
+                        break;
+                    }
+
+                    curr--;
+
+                    if (a[curr] != '9')
+                    {
+                        a[curr] = ((a[curr] - '0') + 1) + '0';
+                        break;
+                    }
+                }
             }
-
-            a[a.length() - 1] = 
-                ((a[a.length() - 1] - '0') + 1)  + '0';
+            else 
+            {
+                a[a.length() - 1] = 
+                    ((a[a.length() - 1] - '0') + 1)  + '0';
+            }
         }
+        
+        isItInteresting(a, ans);
 
         std::cout << "Case #" << i << ": " << ans << "\n";
     }
